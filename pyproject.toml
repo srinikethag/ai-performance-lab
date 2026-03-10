@@ -1,0 +1,13 @@
+[project]
+name = "ai-performance-lab"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ollama>=0.6.1",
+    "pandas>=3.0.1",
+    "prometheus-client>=0.24.1",
+    "rich>=14.3.3",
+]
+package=true
