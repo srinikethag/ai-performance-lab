@@ -25,6 +25,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+data/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -213,3 +214,4 @@ __pycache__/
 .env
 .DS_Store
 results/
+data/
