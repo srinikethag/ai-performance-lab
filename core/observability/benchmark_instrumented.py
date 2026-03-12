@@ -8,17 +8,21 @@ from llm_metrics import (
     llm_tokens_per_second
 )
 
-MODEL = "llama3.2:latest"
+MODELS = [
+    "phi",
+    "llama3.2:latest",
+    "mistral:7b"
+]
 
-PROMPT = "Explain transformer attention."
+PROMPT = "Explain transformers simply."
 
 
-def run_benchmark():
+def run_benchmark(model):
 
     request_time = time.perf_counter()
 
     stream = ollama.generate(
-        model=MODEL,
+        model=model,
         prompt=PROMPT,
         stream=True,
         options={"num_predict":200}
@@ -45,9 +49,7 @@ def run_benchmark():
 
     tokens_sec = token_count / decode_time
 
-    # update metrics
-    llm_ttft_seconds.observe(ttft)
-    llm_latency_seconds.observe(latency)
-
-    llm_tokens_generated_total.inc(token_count)
-    llm_tokens_per_second.set(tokens_sec)
+    llm_ttft_seconds.labels(model=model).observe(ttft)
+    llm_latency_seconds.labels(model=model).observe(latency)
+    llm_tokens_generated_total.labels(model=model).inc(token_count)
+    llm_tokens_per_second.labels(model=model).set(tokens_sec)
